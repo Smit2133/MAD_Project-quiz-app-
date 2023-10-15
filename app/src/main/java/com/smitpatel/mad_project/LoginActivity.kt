@@ -16,15 +16,14 @@ class LoginActivity : AppCompatActivity() {
         setContentView(binding.root)
         supportActionBar?.hide()
         binding.button.setOnClickListener{
-            Firebase.auth.createUserWithEmailAndPassword(binding.email.editText?.text.toString()
-                ,binding.Pasword.editText?.text.toString()).addOnCompleteListener{
-                if (it.isSuccessful){
-                    Toast.makeText(this,"User Created !!!",Toast.LENGTH_LONG).show()
-                }
-                  else{
-
-                    Toast.makeText(this,"User Created !!!",Toast.LENGTH_LONG).show()
-                  }
+            Firebase.auth.createUserWithEmailAndPassword(binding.email.editText?.text.toString(),
+                binding.Password.editText?.text.toString()).addOnCompleteListener{
+             if(it.isSuccessful){
+                Toast.makeText(this,"User Created",Toast.LENGTH_LONG).show()
+             }
+             else {
+                 Toast.makeText(this,"User is not Created",Toast.LENGTH_LONG).show()
+             }
             }
         }
     }

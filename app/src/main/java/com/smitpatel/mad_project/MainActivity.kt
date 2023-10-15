@@ -6,8 +6,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
 import androidx.core.os.postDelayed
-import androidx.core.os.postDelayed
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.ktx.auth
 import com.google.firebase.ktx.Firebase
 
@@ -19,7 +17,7 @@ class MainActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed(3000){
             if(Firebase.auth.currentUser!=null){
 
-                val intent=Intent(this,LoginActivity::class.java)
+                val intent=Intent(this,QuizActivity::class.java)
                 startActivity(intent)
             }
           else{
