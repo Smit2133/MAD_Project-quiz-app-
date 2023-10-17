@@ -1,8 +1,12 @@
 package com.smitpatel.mad_project
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
+import com.google.firebase.firestore.ktx.firestore
+import com.google.firebase.firestore.ktx.toObject
+import com.google.firebase.ktx.Firebase
 import com.smitpatel.mad_project.databinding.ActivityLoginBinding
 import com.smitpatel.mad_project.databinding.ActivityQuizBinding
 
@@ -16,15 +20,28 @@ class QuizActivity : AppCompatActivity() {
         binding=ActivityQuizBinding.inflate(layoutInflater)
         setContentView(binding.root)
         list=ArrayList<QuestionModel>()
-        list.add(QuestionModel("Who is the PM of India","Modi","Rahul","Parth","Smit","Smit"))
-        list.add(QuestionModel("Who is the PM of India","Modi","Rahul","Parth","Smit1","Smit1"))
-        list.add(QuestionModel("Who is the PM of India","Modi","Rahul","Parth","Smit2","Smit2"))
-        list.add(QuestionModel("Who is the PM of India","Modi","Rahul","Parth","Smit3","Smit3"))
-        binding.question.setText(list.get(0).Question)
-        binding.option1.setText(list.get(0).option1)
-        binding.option2.setText(list.get(0).option2)
-        binding.option3.setText(list.get(0).option3)
-        binding.option4.setText(list.get(0).option4)
+        Firebase.firestore.collection("quiz").get().addOnSuccessListener {
+        doct->
+            list.clear()
+           for(i in doct.documents){
+
+               var questionModel=i.toObject(QuestionModel::class.java)
+                list.add(questionModel!!)
+           }
+            binding.question.setText(list.get(0).question)
+            binding.option1.setText(list.get(0).option1)
+            binding.option2.setText(list.get(0).option2)
+            binding.option3.setText(list.get(0).option3)
+            binding.option4.setText(list.get(0).option4)
+
+
+        }
+//        list.add(QuestionModel("Who is the PM of India","Modi","Rahul","Parth","Smit","Smit"))
+//        list.add(QuestionModel("Who is the PM of India","Modi","Rahul","Parth","Smit1","Smit1"))
+//        list.add(QuestionModel("Who is the PM of India","Modi","Rahul","Parth","Smit2","Smit2"))
+//        list.add(QuestionModel("Who is the PM of India","Modi","Rahul","Parth","Smit3","Smit3"))
+
+
         binding.option1.setOnClickListener{
             nextData(binding.option1.text.toString())
         }
@@ -43,10 +60,13 @@ class QuizActivity : AppCompatActivity() {
 count++
         if(count>=list.size)
         {
-          Toast.makeText(this@QuizActivity,score.toString(),Toast.LENGTH_LONG).show()
-        }
+            val intent= Intent(this,ScoreActivity::class.java)
+            intent.putExtra("SCORE",score)
+            startActivity(intent)
+            finish()
+                }
         else{
-        binding.question.setText(list.get(count).Question)
+        binding.question.setText(list.get(count).question)
         binding.option1.setText(list.get(count).option1)
         binding.option2.setText(list.get(count).option2)
         binding.option3.setText(list.get(count).option3)
