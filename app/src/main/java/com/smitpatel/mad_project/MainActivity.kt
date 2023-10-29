@@ -17,13 +17,15 @@ class MainActivity : AppCompatActivity() {
         Handler(Looper.getMainLooper()).postDelayed(3000){
             if(Firebase.auth.currentUser!=null){
 
-                val intent=Intent(this,QuizActivity::class.java)
+                val intent=Intent(this,SubjectActivity::class.java)
                 startActivity(intent)
+                finish()
             }
           else{
                 val intent=Intent(this,LoginActivity::class.java)
                 intent.putExtra("MODE","SIGNUP")
                 startActivity(intent)
+                finish()
             }
 
         }
