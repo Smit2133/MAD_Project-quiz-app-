@@ -19,8 +19,9 @@ class QuizActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         binding = ActivityQuizBinding.inflate(layoutInflater)
         setContentView(binding.root)
+        val message=intent.getStringExtra("sub_name")
         list = ArrayList<QuestionModel>()
-        Firebase.firestore.collection("quiz").get().addOnSuccessListener { doct ->
+        Firebase.firestore.collection(message.toString()).get().addOnSuccessListener { doct ->
             list.clear()
             for (i in doct.documents) {
 
